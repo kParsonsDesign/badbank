@@ -29,8 +29,8 @@ export function CardBootstrap(props) {
   return (
     // possibly add style option to card output in future
     <Card className={classes()}>
-      {props.header && <Card.Header 
-        className={props.headerColor ? 'bg-' + props.headerColor : ''}>{props.header}
+      {props.headerText && <Card.Header as="h4"
+        className={props.headerBgColor ? 'bg-' + props.headerBgColor : ''}>{props.headerText}
       </Card.Header>}
       <Card.Body>
         {props.title && <Card.Title as="h5">{props.title}</Card.Title>}

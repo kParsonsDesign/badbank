@@ -2,34 +2,18 @@ import React from 'react';
 import UserContext from './context';
 import { CardBootstrap } from './context';
 
-// // stop browser form validation
-// (() => {
-//   'use strict'
-
-//   // Find all forms to use Bootstrap validation styles
-//   const forms = document.querySelector('.needs-validation')
-
-//   // Loop over all forms and prevent submission
-//   Array.from(forms).forEach(form => {
-//     form.addEventListener('submit', event => {
-//       if (!form.checkValidity()) {
-//         event.preventDefault()
-//         event.stopPropagation()
-//       }
-
-//       form.classList.add('was-validated')
-//     }, false)
-//   })
-// })()
-
 export default function CreateAccount() {
+  // show controls create account or success message showing
   const [show, setShow]           = React.useState(true);
-  const [status, setStatus]       = React.useState('');
+  // class version below button status message
+  // const [status, setStatus]       = React.useState('');
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName]   = React.useState('');
   const [email, setEmail]         = React.useState('');
   const [password, setPassword]   = React.useState('');
+  // was form validated? for bootstrap syling
   const [validated, setValidated] = React.useState(false);
+  // are all fields filled? submit button disable
   const [canSubmit, setCanSubmit] = React.useState(false);
   const ctx = React.useContext(UserContext);
 
@@ -41,63 +25,67 @@ export default function CreateAccount() {
     if(canSubmit && !formFilled) setCanSubmit(false);
   }, [firstName, lastName, email, password, canSubmit]);
 
-  // javascript form validation - not using
+  // form validation
   function validate(field, label) {
     // check if fields are empty
     if (!field) {
-      // setStatus('Error: Please fill ' + label + ' field');
-      // setTimeout(() => setStatus(''), 3500);
       return false;
     }
 
-    // validate name
-    if (label === 'first name' || label === 'last name') {
-      // let nameFormat = /[a-zA-Z]{2,20}/;
-      // if (!field.match(nameFormat)) {
-      // }
-      if (field.length < 2) return false;
+    // validate first name
+    if (
+      label === 'first name' && 
+      !document.getElementById('formControlInputFirstName').checkValidity()
+    ) {
+      return false;
+    }
+
+    // validate last name name
+    if (
+      label === 'last name' &&
+      !document.getElementById('formControlInputLastName').checkValidity()
+    ) {
+      return false;
     }
 
     // validate email
-    if (label === 'email') {
-      // let emailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      let emailFormat = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      if (!field.match(emailFormat)) {
-        let emailInput = document.getElementById('formControlInputEmail');
-        console.log(emailInput.validity);
-        console.log(emailInput.willValidate);
-        // setStatus('Error: Please enter a valid email address');
-        // setTimeout(() => setStatus(''), 3500);
-        return false;
-      }
+    if (
+      label === 'email' &&
+      !document.getElementById('formControlInputEmail').checkValidity()
+    ) {
+      // let emailFormat = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      return false;
     }
 
     // validate password
-    if (label === 'password') {
-      let passwordInput = document.getElementById('formControlInputPassword');
-      console.log(passwordInput.validity);
-      console.log(passwordInput.willValidate);
+    if (
+      label === 'password' &&
+      !document.getElementById('formControlInputPassword').checkValidity()
+    ) {
+      return false;
     }
+
+    // if all pass
     return true;
   }
 
 
   function handleCreate(e) {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    e.preventDefault();
+    e.stopPropagation();
+    // console.log(e);
+    // const form = e.currentTarget;
+    // turns on bootstrap form valid? styling
     setValidated(true);
-    console.log(`validating: ${firstName}, ${lastName}, ${email}, ${password}`);
+        console.log(`validating: ${firstName} ${lastName}, email: ${email}, password: ${password}`);
     if (!validate(firstName,  'first name'))  return;
-    console.log(`firstName validated: ${firstName}`);
+        console.log(`firstName validated: ${firstName}`);
     if (!validate(lastName,   'last name'))   return;
-    console.log(`lastName validated: ${lastName}`);
+        console.log(`lastName validated: ${lastName}`);
     if (!validate(email,      'email'))       return;
-    console.log(`email validated: ${email}`);
+        console.log(`email validated: ${email}`);
     if (!validate(password,   'password'))    return;
-    console.log(`password validated: ${password}`);
+        console.log(`password validated: ${password}`);
     ctx.users.push({firstName, lastName, email, password, balance:100});
     setShow(false);
   }
@@ -113,15 +101,16 @@ export default function CreateAccount() {
 
   return (
     <div>
-      <h1 className="my-3">Create Account Page</h1>
+      {/* <h1 className="my-3">Create Account Page</h1> */}
       <CardBootstrap 
         bgcolor="light"
         headerColor={show ? ("light") : ("success")}
-        header={show ? "Create Account" : "Account Created"}
-        status={status}
+        headerBgColor={show ? ("light") : ("success")}
+        headerText={show ? "Create Account" : "Account Created"}
+        
         body={show ? (
-            <form className={validated ? "was-validated" : "needs-validation"} 
-              noValidate onSubmit={handleCreate} data-testid="form">
+          <form className={validated ? "was-validated" : "needs-validation"} 
+            noValidate onSubmit={handleCreate} data-testid="form">
             {/* First and Last Name Row */}
             <div className="form-group row">
               <div className="col-6">
@@ -130,7 +119,7 @@ export default function CreateAccount() {
                   placeholder="Enter First Name" value={firstName} required minLength="2"
                   onChange={e => setFirstName(e.currentTarget.value)} 
                 />
-                <div className="invalid-feedback">First Name must be 2 or more letters.</div>
+                <div id='first-name-invalid' className="invalid-feedback">First Name must be 2 or more letters.</div>
               </div>
               <div className="col-6">
                 <label htmlFor="formControlInputLastName" className="form-label">Last Name</label>
@@ -138,7 +127,7 @@ export default function CreateAccount() {
                   placeholder="Enter Last Name" value={lastName} required minLength="2"
                   onChange={e => setLastName(e.currentTarget.value)} 
                 />
-                <div className="invalid-feedback">Last Name must be 2 or more letters.</div>
+                <div id='last-name-invalid' className="invalid-feedback">Last Name must be 2 or more letters.</div>
               </div>
             </div><br />
 
@@ -146,34 +135,34 @@ export default function CreateAccount() {
             <label htmlFor="formControlInputEmail" className="form-label">Email Address</label>
             <input type="email" className="form-control" id="formControlInputEmail"
               placeholder="Enter email" value={email} required 
-              pattern='/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'
               onChange={e => setEmail(e.currentTarget.value)}
             />
-            <div className="invalid-feedback">Valid email address required.</div>
+            <div id='email-invalid' className="invalid-feedback">Valid email address required.</div>
             <br />
 
             {/* Password */}
             <label htmlFor="formControlInputPassword" className="form-label">Password</label>
             <input type="password" className="form-control" id="formControlInputPassword"
-              placeholder="Enter password" value={password} required 
-              minLength="8"
+              placeholder="Enter password" value={password} required minLength="8"
+              pattern='/[a-zA-Z0-9'
               onChange={e => setPassword(e.currentTarget.value)}
             />
-            <div className="invalid-feedback">Password must be 8 or more characters.</div>
+            <div id='password-invalid' className="invalid-feedback">Password must be 8 or more characters.</div>
             <br />
 
             {/* Submit Button */}
             <button type="submit" disabled={!canSubmit} className="btn btn-primary">Create Account</button>
-            </form>
-          ) : (
-            <div>
-            {/* Success Notification */}
-              <h5>The account for {firstName} {lastName} was successfully created.</h5>
-              <p>Would you like to create another account?</p>
-              <button type="submit" className="btn btn-outline-primary"
-                onClick={clearForm}>Add another account</button>
-            </div>
-          )}
+          </form>
+        ) : (
+          <div>
+          {/* Success Notification */}
+            
+            <p className='lead'>Congratulations, <span className='fw-bolder'>{firstName} {lastName}</span>! Your account was successfully created.</p>
+            <p>Would you like to create another account?</p>
+            <button type="submit" className="btn btn-outline-primary"
+              onClick={clearForm}>Add another account</button>
+          </div>
+        )}
       />
     </div>
   );
