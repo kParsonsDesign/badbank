@@ -22,10 +22,10 @@ export default function NavBootstrap() {
   return (
     <Navbar variant="dark" expand="md" style={{paddingTop: 0}}>
       <Container fluid className='px-md-0 pt-md-2' style={{backgroundColor: bgColor}}>
-        <Navbar.Brand as={Link} to="/" className="d-md-none" style={{color: txtColor}}>Bad Bank</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={navToggle} className="m-1" style={{color: txtColor, borderColor: txtColor}} />
+        <Navbar.Brand as={Link} to="/" className="d-md-none ms-sm-5" style={{color: txtColor}}>Bad Bank</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={navToggle} className="m-1 me-sm-5" style={{color: txtColor, borderColor: txtColor}} />
         <Navbar.Collapse id="basic-navbar-nav" in={isOpen}>
-          <Nav variant="tabs" defaultActiveKey={hash} className="container">
+          <Nav variant="tabs" defaultActiveKey={hash} className="container text-center">
               <Nav.Link as={Link} to="/"                onClick={linkToggle} eventKey="/"
               className="px-3">Bad Bank</Nav.Link>
               <Nav.Link as={Link} to="/createaccount/"  onClick={linkToggle} eventKey="/createaccount/"
