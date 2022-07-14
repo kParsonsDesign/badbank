@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/badbank/static/css/main.344f7a47.css",
-    "main.js": "/badbank/static/js/main.b8ae7f70.js",
+    "main.js": "/badbank/static/js/main.d877df96.js",
     "static/media/flying-money.svg": "/badbank/static/media/flying-money.cf77fbb759429fc3989696ed924b17fa.svg",
     "static/media/bank-front.svg": "/badbank/static/media/bank-front.fb3d8babdc83b73031633312b6913bfe.svg",
     "index.html": "/badbank/index.html",
     "main.344f7a47.css.map": "/badbank/static/css/main.344f7a47.css.map",
-    "main.b8ae7f70.js.map": "/badbank/static/js/main.b8ae7f70.js.map"
+    "main.d877df96.js.map": "/badbank/static/js/main.d877df96.js.map"
   },
   "entrypoints": [
     "static/css/main.344f7a47.css",
-    "static/js/main.b8ae7f70.js"
+    "static/js/main.d877df96.js"
   ]
 }
