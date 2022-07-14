@@ -36,8 +36,6 @@ export default function NavBootstrap() {
               className="px-3">Deposit</Nav.Link>
               <Nav.Link as={Link} to="/withdraw/"       onClick={linkToggle} eventKey="/withdraw/"
               className="px-3">Withdraw</Nav.Link>
-              <Nav.Link as={Link} to="/balance/"        onClick={linkToggle} eventKey="/balance/"
-              className="px-3">Balance</Nav.Link>
               <Nav.Link as={Link} to="/alldata/"        onClick={linkToggle} eventKey="/alldata/"
               className="px-3">All Data</Nav.Link>
           </Nav>
