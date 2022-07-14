@@ -10,8 +10,6 @@ import Login from './login';
 import Deposit from './deposit';
 import Withdraw from './withdraw';
 import AllData from './alldata';
-import Balance from './balance';
-
 
 
 function BadBank() {
@@ -32,7 +30,6 @@ function BadBank() {
             <Route path='/login/'         element={<Login />} />
             <Route path='/deposit/'       element={<Deposit />} />
             <Route path='/withdraw/'      element={<Withdraw />} />
-            <Route path='/balance/'       element={<Balance />} />
             <Route path='/alldata/'       element={<AllData />} />
           </Routes>
 
