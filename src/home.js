@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className='row'>
       <CardBootstrap 
-        width='25rem' 
+        maxWidth='25rem' 
         padding="0"
         bgcolor="light" 
         txtcolor="black" 

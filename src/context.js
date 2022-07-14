@@ -16,6 +16,7 @@ export default UserContext;
 
 
 export function CardBootstrap(props) {
+  console.log(props);
   function classes() {
     const bg        = props.bgcolor;
     const txt       = props.txtcolor;

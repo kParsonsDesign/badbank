@@ -7,7 +7,7 @@ export default function Withdraw() {
       <CardBootstrap 
         headerText="Deposit"
         className="mb-5"
-        width="25rem"
+        maxWidth="25rem"
         body={(
           <>
           <BankTransactionForm type='withdraw' />

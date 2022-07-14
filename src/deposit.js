@@ -7,8 +7,8 @@ export default function Deposit() {
     <>
       <CardBootstrap 
         headerText="Deposit"
-        className="mb-5"
-        width="25rem"
+        className="mb-5" 
+        maxWidth="25rem"
         body={(
           <>
           <BankTransactionForm type='deposit' />
