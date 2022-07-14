@@ -24,6 +24,13 @@
   /* background-color: rgba(17, 83, 52, 1)!important; */
 }
 
+.input-money {
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='20px' width='20px'><text x='0' y='15' fill='gray' font-size='20' font-family='\"Helvetica Neue\", Helvetica, Arial, sans-serif' opacity='0.5'>$</text></svg>");
+  background-repeat: no-repeat;
+  background-position: 1rem 1rem;
+  padding-left: 2rem!important;
+}
+
 @media screen and (max-width: 767) {
   
 }

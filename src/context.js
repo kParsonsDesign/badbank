@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 // import { Route, Routes, Link, HashRouter } from 'react-router';
-import { Card, Form } from 'react-bootstrap';
+import { Button, Card, Form, FormControl, InputGroup, Dropdown, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 // Global variables in this file
 // do not need to be brought in with context to index.js
@@ -60,30 +61,174 @@ export function CardBootstrap(props) {
   );
 }
 
-export function MyCard(props) {
-  function classes() {
-    const bg = props.bgcolor ? ' bg-' + props.bgcolor : '';
-    const txt = props.txtcolor ? ' text-' + props.txtcolor : ' text-white';
-    return 'card mb-3' + bg + txt;
+export function BankTransactionForm(props) {
+  const ctx       = useContext(UserContext);
+  const user      = ctx.users.find(user => user.loggedIn === true);
+  const userIndex = (ctx.users.findIndex(user => user.loggedIn === true));
+  const [amount, setAmount]       = useState('');
+  const [submit, setSubmit]       = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [message, setMessage]     = useState('Please enter a valid dollar amount.');
+  const [showConf, setShowConf]   = useState(false);
+  const [success, setSuccess]     = useState(false);
+  const handleCloseConf           = () => setShowConf(false);
+  const handleCloseSuccess        = () => setSuccess(false);
+  // const handleShow = () => setShow(true);
+
+   // keep track of form field states and set canSubmit for submit button
+   useEffect(() => {
+    // if(amount > 0) setSubmit(true);
+    // if(amount === 0 | amount === NaN) setSubmit(false);
+    // if(!document.getElementById('depositInput').checkValidity()) setSubmit(false);
+    if (amount) setSubmit(true);
+    // if (!amount) setSubmit(false);
+  }, [amount]); 
+  
+  // change invalid feedback message based on input
+  useEffect(() => {
+    if (amount <= 0) setMessage('Please enter an amount greater than 0.');
+    if (amount == '') setMessage('Please enter a valid dollar amount.');
+    if (amount > 0) setMessage('Please enter a valid dollar amount.');
+    if (amount > 1000000) setMessage('Amount too large for this service. Please contact local bank branch.');
+  }, [amount]);
+
+  const type = props.type;
+  // if (type !== 'deposit' | type !== 'withdraw') return;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setValidated(true);
+    if (!document.getElementById('depositInput').checkValidity()) return;
+    // display confirmation window
+    setShowConf(true);
+  }
+  
+  const handleConfirm = () => {
+    // close confimation window
+    handleCloseConf();
+
+    // update user balance
+    // change transaction amount format to number
+    let transaction = amount;
+    transaction = Number(transaction);
+
+    if (type === 'deposit') {
+      // add to user balance
+      ctx.users[userIndex].balance = Number((ctx.users[userIndex].balance + transaction).toFixed(2));
+    }
+    if (type === 'withdraw') {
+      // check for overdraft
+      if (transaction > ctx.users[userIndex].balance) {
+        // display overdraft error notice
+        return;
+      }
+      // subtract from user balance
+      ctx.users[userIndex].balance = Number((ctx.users[userIndex].balance - transaction).toFixed(2));
+    }
+    addTransactionHistory(transaction);
+    
+    // display sucess message
+    setSuccess(true);
+    // clear input field and form validation
+    setValidated(false);
+    setAmount('');
+  }
+
+  const addTransactionHistory = (transaction) => {
+    if (ctx.users[userIndex].transactionHistory) {
+      ctx.users[userIndex].transactionHistory.unshift({type: type, amount: transaction});
+    } else {
+      ctx.users[userIndex].transactionHistory = [{type: type, amount: transaction}];
+    }
+  }
+
+  const handleChange = (e) => {
+    setAmount(e.currentTarget.value);
   }
 
   return (
-    <div className={classes()} style={{ maxWidth: '18rem' }}>
-      <div className='card-header'>{props.header}</div>
-      <div className='card-body'>
-        {props.title && <h5 className='card-title'>{props.title}</h5>}
-        {props.text && <p className='card-text'>{props.text}</p>}
-        {props.body}
-        {props.status && <div id='createStatus'>{props.status}</div>}
-      </div>
-    </div>
-  );
-}
+    <>
+    <Form className={validated ? "was-validated" : "needs-validation"}
+      noValidate onSubmit={handleSubmit}>
 
-export function BankForm(props) {
-  return (
-    <Form>
-      <h5>{props.type === 'deposit' ? 'Deposit' : 'Withdraw'}</h5>
+      {/* Account Info */}
+      <InputGroup className='my-3 mb-0'>
+        <InputGroup.Text className='col-4'>Account</InputGroup.Text>
+        <Button variant='outline-secondary' className='col-8 text-dark' disabled>{user.firstName} {user.lastName}</Button>
+        {/* <Dropdown drop='up' align="end">
+          <Dropdown.Toggle variant='outline-secondary' className='col-1 fs-4 p-0' />
+          <Dropdown.Menu>
+            <Dropdown.Item as={Link} to="/login/">Change Account</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown> */}
+      </InputGroup>
+
+      {/* Current Balance Info */}
+      <InputGroup size="lg" className='my-3 mb-4'>
+        <InputGroup.Text className='col-4'>Balance</InputGroup.Text>
+        <Button variant='info' 
+          className='col-8 text-bg-dark' 
+          style={{
+            backgroundColor: 'rgba(31, 171, 199, 0.1)',
+            borderColor: 'rgba(31, 171, 199, 0.4)'
+          }} 
+          disabled
+        >${user.balance.toLocaleString()}</Button>
+      </InputGroup>
+      <hr className="text-secondary" style={{opacity: '10%'}} />
+
+      {/* Deposit Area */}
+      <InputGroup size="lg" className='my-3 mt-4 has-validation'>
+        <InputGroup.Text className='col-4'>{type === 'deposit' ? 'Deposit' : 'Withdraw'}:</InputGroup.Text>
+        <FormControl type='number' id='depositInput' className='input-money' required
+          max={type === 'deposit' ? 1000000 : user.balance} min={0.01} step={0.01} 
+          value={amount} onChange={handleChange}
+        ></FormControl>
+        <div id='amountInvalidFeedback' className='invalid-feedback'>{message}</div>
+      </InputGroup>
+      <Button size='lg' variant='outline-primary' 
+        className='col-12' type='submit' disabled={!submit}
+      >Sumbit {type === 'deposit' ? 'Deposit' : 'Withdrawal'}</Button>
     </Form>
+
+    {/* Confirmation Modal */}
+    <Modal show={showConf} onHide={handleCloseConf} centered>
+      <Modal.Header>
+        <Modal.Title>Transaction Confirmation</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className='text-center'>
+        <p className='lead'>{type === 'deposit' ? 'Deposit' : 'Withdraw'} <span className='fw-bold'>${Number(amount).toLocaleString()}</span> to {user.firstName}&nbsp;{user.lastName}'s account?</p>
+          <Button variant='outline-success' size='lg' className='m-2 mx-4'
+          onClick={handleConfirm}>Yes, {type === 'deposit' ? 'deposit' : 'withdraw'}</Button>
+          <Button variant='outline-danger' size='lg' className='m-2 mx-4'
+          onClick={handleCloseConf}>No, cancel</Button>
+      </Modal.Body>
+    </Modal>
+
+    {/* Success Modal */}
+    <Modal show={success} onHide={handleCloseSuccess} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Success</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className='text-center'>
+        <p>Your {type === 'deposit' ? 'deposit' : 'withdrawal'} is complete.</p>
+        <InputGroup size="lg" className='my-3 mb-4'>
+        <InputGroup.Text className=''>New account balance</InputGroup.Text>
+        <Button variant='outline-success' 
+          className='text-dark px-5' 
+          style={{/*
+            backgroundColor: 'rgba(31, 171, 199, 0.1)',
+            borderColor: 'rgba(31, 171, 199, 0.4)'
+          */}} 
+          disabled
+        >${user.balance.toLocaleString()}</Button>
+      </InputGroup>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant='outline-secondary' onClick={handleCloseSuccess}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+    </>
   );
 }
