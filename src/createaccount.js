@@ -73,19 +73,17 @@ export default function CreateAccount() {
   function handleCreate(e) {
     e.preventDefault();
     e.stopPropagation();
-    // console.log(e);
-    // const form = e.currentTarget;
-    // turns on bootstrap form valid? styling
+    // setValidated turns on bootstrap form :invalid styling
     setValidated(true);
-        console.log(`validating: ${firstName} ${lastName}, email: ${email}, password: ${password}`);
+    console.log(`validating: ${firstName} ${lastName}, email: ${email}, password: ${password}`);
     if (!validate(firstName,  'first name'))  return;
-        console.log(`firstName validated: ${firstName}`);
+    console.log(              `firstName validated: ${firstName}`);
     if (!validate(lastName,   'last name'))   return;
-        console.log(`lastName validated: ${lastName}`);
+    console.log(              `lastName validated: ${lastName}`);
     if (!validate(email,      'email'))       return;
-        console.log(`email validated: ${email}`);
+    console.log(              `email validated: ${email}`);
     if (!validate(password,   'password'))    return;
-        console.log(`password validated: ${password}`);
+    console.log(              `password validated: ${password}`);
     ctx.users.push({firstName, lastName, email, password, balance:100});
     setShow(false);
   }
@@ -103,6 +101,7 @@ export default function CreateAccount() {
     <div>
       {/* <h1 className="my-3">Create Account Page</h1> */}
       <CardBootstrap 
+        maxWidth="30rem"
         bgcolor="light"
         headerColor={show ? ("light") : ("success")}
         headerBgColor={show ? ("light") : ("success")}
@@ -132,22 +131,25 @@ export default function CreateAccount() {
             </div><br />
 
             {/* Email */}
-            <label htmlFor="formControlInputEmail" className="form-label">Email Address</label>
-            <input type="email" className="form-control" id="formControlInputEmail"
-              placeholder="Enter email" value={email} required 
-              onChange={e => setEmail(e.currentTarget.value)}
-            />
-            <div id='email-invalid' className="invalid-feedback">Valid email address required.</div>
+            <div className="form-group">
+              <label htmlFor="formControlInputEmail" className="form-label">Email Address</label>
+              <input type="email" className="form-control" id="formControlInputEmail"
+                placeholder="Enter email" value={email} required 
+                onChange={e => setEmail(e.currentTarget.value)}
+              />
+              <div id='email-invalid' className="invalid-feedback">Valid email address required.</div>
+            </div>
             <br />
 
             {/* Password */}
-            <label htmlFor="formControlInputPassword" className="form-label">Password</label>
-            <input type="password" className="form-control" id="formControlInputPassword"
-              placeholder="Enter password" value={password} required minLength="8"
-              pattern='/[a-zA-Z0-9'
-              onChange={e => setPassword(e.currentTarget.value)}
-            />
-            <div id='password-invalid' className="invalid-feedback">Password must be 8 or more characters.</div>
+            <div className="form-group">
+              <label htmlFor="formControlInputPassword" className="form-label">Password</label>
+              <input type="password" className="form-control" id="formControlInputPassword"
+                placeholder="Enter password" value={password} required minLength="8"
+                onChange={e => setPassword(e.currentTarget.value)}
+              />
+              <div id='password-invalid' className="invalid-feedback">Password must be 8 or more characters.</div>
+            </div>
             <br />
 
             {/* Submit Button */}
