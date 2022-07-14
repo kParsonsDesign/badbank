@@ -198,7 +198,7 @@ export function BankTransactionForm(props) {
         <Modal.Title>Transaction Confirmation</Modal.Title>
       </Modal.Header>
       <Modal.Body className='text-center'>
-        <p className='lead'>{type === 'deposit' ? 'Deposit' : 'Withdraw'} <span className='fw-bold'>${Number(amount).toLocaleString()}</span> to {user.firstName}&nbsp;{user.lastName}'s account?</p>
+        <p className='lead'>{type === 'deposit' ? 'Deposit' : 'Withdraw'} <span className='fw-bold'>${Number(amount).toLocaleString()}</span> {type === 'deposit' ? 'to' : 'from'} {user.firstName}&nbsp;{user.lastName}'s account?</p>
           <Button variant='outline-success' size='lg' className='m-2 mx-4'
           onClick={handleConfirm}>Yes, {type === 'deposit' ? 'deposit' : 'withdraw'}</Button>
           <Button variant='outline-danger' size='lg' className='m-2 mx-4'

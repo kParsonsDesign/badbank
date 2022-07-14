@@ -1,13 +1,19 @@
-import React from 'react';
-import UserContext from './context';
+import { CardBootstrap, BankTransactionForm } from './context';
 
 export default function Withdraw() {
-  const ctx = React.useContext(UserContext);
-
+  
   return (
-    <div>
-      <h1 className="my-3">Withdraw Page</h1>
-      {JSON.stringify(ctx)}
-    </div>
+    <>
+      <CardBootstrap 
+        headerText="Deposit"
+        className="mb-5"
+        width="25rem"
+        body={(
+          <>
+          <BankTransactionForm type='withdraw' />
+          </>
+        )}
+      />
+    </>
   );
 }
