@@ -13,22 +13,34 @@ import { Card, Form } from 'react-bootstrap';
 const UserContext = React.createContext(null);
 export default UserContext;
 
-// New bootstrap card component
-// const Card = ReactBootstrap.Card;
 
 export function CardBootstrap(props) {
   function classes() {
-    const bg  = props.bgcolor  ? ' bg-'   + props.bgcolor  : '';
-    const txt = props.txtcolor ? ' text-' + props.txtcolor : ' text-body';
-    return 'mt-5' + bg + txt;
+    const bg        = props.bgcolor;
+    const txt       = props.txtcolor;
+    const bsMargin  = props.bsMargin;
+
+    let classes = 'mt-5';
+    if (bg)       classes += ` bg-${bg}`;
+    if (txt)      classes += ` text-${txt}`;
+    if (bsMargin) classes += ` m-${bsMargin}`;
+    return classes;
+  }
+  
+  function styles() {
+    const width = props.width;
+    const maxWidth = props.maxWidth;
+    const padding = props.padding;
+
+    let styles = {};
+    if (width)    styles = {...styles, width};
+    if (maxWidth) styles = {...styles, maxWidth};
+    if (padding)  styles = {...styles, padding};
+    return styles;
   }
 
-  // function styles() {
-  // }
-
   return (
-    // possibly add style option to card output in future
-    <Card className={classes()}>
+    <Card className={classes()} style={styles()}>
       {props.headerText && <Card.Header as="h4"
         className={props.headerBgColor ? 'bg-' + props.headerBgColor : ''}>{props.headerText}
       </Card.Header>}
@@ -66,15 +78,8 @@ export function MyCard(props) {
 
 export function BankForm(props) {
   return (
-    <Card>
-      <Card.Header>
-        <Card.Title>Header Title</Card.Title>
-      </Card.Header>
-      <Card.Body>
-        <Form>
-
-        </Form>
-      </Card.Body>
-    </Card>
+    <Form>
+      <h5>{props.type === 'deposit' ? 'Deposit' : 'Withdraw'}</h5>
+    </Form>
   );
 }
