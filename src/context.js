@@ -19,22 +19,26 @@ export function CardBootstrap(props) {
     const bg        = props.bgcolor;
     const txt       = props.txtcolor;
     const bsMargin  = props.bsMargin;
+    const classNm   = props.className;
 
     let classes = 'mt-5';
     if (bg)       classes += ` bg-${bg}`;
     if (txt)      classes += ` text-${txt}`;
     if (bsMargin) classes += ` m-${bsMargin}`;
+    if (classNm)  classes += ` ${classNm}`;
     return classes;
   }
   
   function styles() {
     const width = props.width;
     const maxWidth = props.maxWidth;
+    const minWidth = props.minWidth;
     const padding = props.padding;
 
     let styles = {};
     if (width)    styles = {...styles, width};
     if (maxWidth) styles = {...styles, maxWidth};
+    if (minWidth) styles = {...styles, minWidth};
     if (padding)  styles = {...styles, padding};
     return styles;
   }
