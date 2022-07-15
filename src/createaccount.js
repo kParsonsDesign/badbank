@@ -1,12 +1,9 @@
 import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import UserContext from './context';
 import { CardBootstrap } from './context';
 
 export default function CreateAccount() {
-  // show controls create account or success message showing
-  const [show, setShow]           = React.useState(true);
-  // class version below button status message
-  // const [status, setStatus]       = React.useState('');
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName]   = React.useState('');
   const [email, setEmail]         = React.useState('');
@@ -16,6 +13,12 @@ export default function CreateAccount() {
   // are all fields filled? submit button disable
   const [canSubmit, setCanSubmit] = React.useState(false);
   const ctx = React.useContext(UserContext);
+  // show controls create account or success message showing
+  const [success, setSuccess] = React.useState(false);
+  const handleCloseSuccess = () => {
+    clearForm();
+    setSuccess(false);
+  }
 
   // keep track of form field states and set canSubmit for submit button
   React.useEffect(() => {
@@ -85,7 +88,7 @@ export default function CreateAccount() {
     if (!validate(password,   'password'))    return;
     console.log(              `password validated: ${password}`);
     ctx.users.push({firstName, lastName, email, password, balance:100});
-    setShow(false);
+    setSuccess(true);
   }
 
   function clearForm() {
@@ -94,7 +97,6 @@ export default function CreateAccount() {
     setEmail('');
     setPassword('');
     setValidated(false);
-    setShow(true);
   }
 
   return (
@@ -103,11 +105,11 @@ export default function CreateAccount() {
       <CardBootstrap 
         maxWidth="30rem"
         bgcolor="light"
-        headerColor={show ? ("light") : ("success")}
-        headerBgColor={show ? ("light") : ("success")}
-        headerText={show ? "Create Account" : "Account Created"}
+        headerColor='light'
+        headerBgColor='light'
+        headerText='Create Account'
         
-        body={show ? (
+        body={(
           <form className={validated ? "was-validated" : "needs-validation"} 
             noValidate onSubmit={handleCreate} data-testid="form">
             {/* First and Last Name Row */}
@@ -155,17 +157,24 @@ export default function CreateAccount() {
             {/* Submit Button */}
             <button type="submit" disabled={!canSubmit} className="btn btn-primary">Create Account</button>
           </form>
-        ) : (
-          <div>
-          {/* Success Notification */}
-            
-            <p className='lead'>Congratulations, <span className='fw-bolder'>{firstName} {lastName}</span>! Your account was successfully created.</p>
-            <p>Would you like to create another account?</p>
-            <button type="submit" className="btn btn-outline-primary"
-              onClick={clearForm}>Add another account</button>
-          </div>
         )}
       />
+
+      {/* Success Modal */}
+      <Modal show={success} onHide={handleCloseSuccess} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Account Created</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='text-center'>
+          <p className='lead'>Congratulations, <span className='fw-bold'>{firstName} {lastName}</span>!</p>
+          <p className='lead'>Your account was successfully created. Please enjoy a <span className='fw-bold'>$100&nbsp;sign&nbsp;up&nbsp;bonus</span>!</p>
+          <p className='lead'>Would you like to create another account?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='primary' onClick={handleCloseSuccess}>Add another Account</Button>
+          <Button variant='outline-secondary' onClick={handleCloseSuccess}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
