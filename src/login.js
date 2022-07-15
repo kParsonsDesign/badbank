@@ -1,60 +1,117 @@
 import React from 'react';
-import { Button, Card, FloatingLabel, Form, FormControl, InputGroup } from 'react-bootstrap';
+import { Button, Card, FloatingLabel, Form, FormControl, FormGroup, InputGroup, Modal } from 'react-bootstrap';
 import UserContext, { CardBootstrap} from './context';
 
 export default function Login() {
+  const [validated, setValidated] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const handleCloseError = () => setError(false);
+  const [success, setSuccess] = React.useState(false);
+  const handleCloseSuccess = () => setSuccess(false);
   const ctx = React.useContext(UserContext);
   const user = ctx.users.find(item => item.loggedIn === true);
+  const userIndex = ctx.users.findIndex(item => item.loggedIn === true);
+  // console.log(userIndex);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setValidated(true);
+    // check if user email is registered
+    const registered = ctx.users.find(item => item.email === email);
+    if (registered) {
+      const registeredIndex = ctx.users.findIndex(item => item.email === email);
+      // if email is registered check password
+      if (password === registered.password) {
+        // log out current user
+        ctx.users[userIndex].loggedIn = false;
+        // log in new user
+        ctx.users[registeredIndex].loggedIn = true;
+        // display success?
+        setSuccess(true);
+        // clear login form and return if this far
+        setEmail('');
+        setPassword('');
+        setValidated(false);
+        return
+      }
+    }
+    // display error message if no match
+    setError(true);
+    setEmail('');
+    setPassword('');
+    setValidated(false);
+  };
 
   return (
-    <div className='row justify-content-start'>
-      <div className='col-10 col-sm-8 col-md-6 col-lg-5'>
+    <>
       <CardBootstrap 
-        
+        maxWidth='25rem'
         headerText='Login'
         body={(
           <>
-          <p>Welcome, <span className='fw-bold'> {user.firstName}&nbsp;{user.lastName}</span>!</p> 
-          <p>You may continue using this account or log in to another.</p>
+          {/* {userIndex === 0 ? (
+            <>
+            <p>Welcome, you are using <span className='fw-bold'>{user.firstName}&nbsp;{user.lastName}'s</span> account.</p> 
+            <p>You may continue using his account for free.<br />Or log in to another.</p>
+            </>
+          ) : (
+            <> */}
+              <p className='lead'>Welcome, <span className='fw-bold'>{user.firstName}&nbsp;{user.lastName}</span>!</p>
+            {/* </>
+          )} */}
           <hr />
           <Card.Title>Change Account</Card.Title>
-          <Form>
-            <FloatingLabel controlId='floatingEmail' label="Email" className='my-3'>
-              <Form.Control type='email' placeholder='email@email.com' className='' />
-            </FloatingLabel>
-            <FloatingLabel controlId='floatingPassword' label="Password" className='my-3'>
-              <Form.Control type='password' placeholder='password' />
-            </FloatingLabel>
+          <Form onSubmit={handleSubmit} noValidate validated={validated}>
+            <FormGroup controlId='loginEmail' className='my-3'>
+              <FloatingLabel label="Email">
+                <Form.Control type='email' placeholder='email@email.com' value={email} onChange={e => setEmail(e.currentTarget.value)} required />
+                <Form.Control.Feedback type='invalid'>Email required</Form.Control.Feedback>
+              </FloatingLabel>
+            </FormGroup>
+
+            <FormGroup controlId='loginPassword' className='my-3'>
+              <FloatingLabel label="Password">
+                <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.currentTarget.value)} required />
+              <Form.Control.Feedback type='invalid'>Password required</Form.Control.Feedback>
+              </FloatingLabel>
+            </FormGroup>
+
+            <Button type='submit'>Log In</Button>
           </Form>
           </>
         )}
       />
-      </div>
 
-      <div className='col col-lg-4'>
-      <CardBootstrap
-        className="d-none d-md-flex"
-        width="18rem"
-        body={(
-          <>
-          <InputGroup className='mb-3'>
-            <InputGroup.Text className='col-md-4'>Account</InputGroup.Text>
-            <Button variant='outline-secondary' className='col-md-8' disabled>{user.firstName} {user.lastName}</Button>
-          </InputGroup>
-          <InputGroup className='mb-3'>
-            <InputGroup.Text className='col-md-4'>Balance</InputGroup.Text>
-            <Button variant='outline-secondary' className='col-md-8 text-dark' disabled>${user.balance.toLocaleString()}</Button>
-          </InputGroup>
+      {/* Success Modal */}
+      <Modal show={success} onHide={handleCloseSuccess} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='text-center'>
+          <p className='lead'>You are now logged in as:</p>
+          <p className='lead fw-bold'>{user.firstName}&nbsp;{user.lastName}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='outline-secondary' onClick={handleCloseSuccess}>Close</Button>
+        </Modal.Footer>
+      </Modal>
 
-          <hr />
-          <p className='lead'>Account Actions:</p>
-          <Button variant='outline-secondary' className='m-1'>Deposit</Button>
-          <Button variant='outline-secondary' className='m-1'>Withdraw</Button>
-          </>
-        )}
-      />
-      </div>
-
-    </div>
+      {/* Error Modal */}
+      <Modal show={error} onHide={handleCloseError} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='text-center'>
+          <p className='lead'>Email/Password not found.</p>
+          <p className='lead'>Please try again.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='outline-secondary' onClick={handleCloseError}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }

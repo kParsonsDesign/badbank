@@ -7,7 +7,7 @@ export default function AllData() {
   return (
     <div>
       <h1 className="my-3 mb-5">Registered Users</h1>
-      <table className="table table-striped">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">Logged In</th>
@@ -22,7 +22,7 @@ export default function AllData() {
         {ctx.users.map((user, index) => {
           return (
             <>
-            <tr key={`user${index}`}>
+            <tr key={`user${index}`} style={{fontWeight:'600'}}>
               <td key={`${index}loggedIn`} style={{paddingLeft: '1.5rem'}}>{user.loggedIn ? <img style={{width: '1rem', height: '1rem'}} alt='check' src='https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/a51a7674-8d5d-4495-a2d2-a67c090f5c3b/32x32/2714.png'/> : ""}</td>
               <td key={`${index}firstName`}>{user.firstName}</td>
               <td key={`${index}lastName`}>{user.lastName}</td>
@@ -31,9 +31,9 @@ export default function AllData() {
               <td key={`${index}balance`}>${user.balance.toLocaleString("en-US")}</td>
             </tr>
             {user.transactionHistory ? (
-              <tr><td colSpan="4"><table className='table table-striped' style={{marginLeft: '20%'}}>
-                <thead><tr><td style={{}}>Transactions:</td><td>Type</td><td>Amount</td><td>Running Balance</td></tr></thead>
-                <tbody style={{borderTopColor: 'lightgray', color: '#212529', opacity: '0.85'}}>
+              <tr><td colSpan="6"><table className='table w-75' style={{marginLeft: '20%'}}>
+                <thead style={{color:'rgba(0, 0, 0, 0.65)', background:'rgba(0, 0, 0, 0.05)'}}><tr><td>Transactions:</td><td>Type</td><td>Amount</td><td>Running Balance</td></tr></thead>
+                <tbody style={{borderTopColor: 'rgba(0, 0, 0, 0.08)', color:'rgba(0, 0, 0, 0.65)', background:'rgba(0, 0, 0, 0.03)'}}>
                 {user.transactionHistory.map((transaction, tIndex) => {
                   return (
                   <tr key={'user' + index + '-trans' + tIndex}>
