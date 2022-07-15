@@ -80,7 +80,7 @@ export function BankTransactionForm(props) {
    useEffect(() => {
     // if(amount > 0) setSubmit(true);
     // if(amount === 0 | amount === NaN) setSubmit(false);
-    // if(!document.getElementById('depositInput').checkValidity()) setSubmit(false);
+    // if(!document.getElementById(type + 'Input').checkValidity()) setSubmit(false);
     if (amount) setSubmit(true);
     // if (!amount) setSubmit(false);
   }, [amount]); 
@@ -105,7 +105,8 @@ export function BankTransactionForm(props) {
     // set form validation
     setValidated(true);
     // check form validity
-    if (!document.getElementById('depositInput').checkValidity()) return;
+    
+    if (!document.getElementById(type + 'Input').checkValidity()) return;
     // display confirmation window
     setShowConf(true);
   }
