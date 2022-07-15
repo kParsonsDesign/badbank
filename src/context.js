@@ -175,18 +175,21 @@ export function BankTransactionForm(props) {
       {/* Current Balance Info */}
       <InputGroup size="lg" className='my-3 mb-4'>
         <InputGroup.Text className='col-4'>Balance</InputGroup.Text>
-        <Button variant='info' 
-          className='col-8 text-bg-dark' 
+        <Button variant='outline-secondary' 
+          className='col-8' 
           style={{
-            backgroundColor: 'rgba(31, 171, 199, 0.1)',
-            borderColor: 'rgba(31, 171, 199, 0.4)'
+            color: 'black',
+            opacity: '1',
+            // backgroundColor: 'rgba(31, 171, 199, 0.1)',
+            // borderColor: 'rgba(31, 171, 199, 0.4)'
+            borderColor: 'rgba(0, 0, 0, 0.3)'
           }} 
           disabled
         >${user.balance.toLocaleString()}</Button>
       </InputGroup>
       <hr className="text-secondary" style={{opacity: '10%'}} />
 
-      {/* Deposit Area */}
+      {/* Transaction Area */}
       <InputGroup size="lg" className='my-3 mt-4 has-validation'>
         <InputGroup.Text className='col-4'>{type === 'deposit' ? 'Deposit' : 'Withdraw'}:</InputGroup.Text>
         <FormControl type='number' id={type === 'deposit' ? 'depositInput' : 'withdrawInput'} className='input-money' required
@@ -195,7 +198,7 @@ export function BankTransactionForm(props) {
         ></FormControl>
         <div id='amountInvalidFeedback' className='invalid-feedback'>{message}</div>
       </InputGroup>
-      <Button size='lg' variant='outline-primary' 
+      <Button size='lg' variant='primary' 
         className='col-12' type='submit' disabled={!submit}
       >Sumbit {type === 'deposit' ? 'Deposit' : 'Withdrawal'}</Button>
     </Form>
@@ -207,9 +210,9 @@ export function BankTransactionForm(props) {
       </Modal.Header>
       <Modal.Body className='text-center'>
         <p className='lead'>{type === 'deposit' ? 'Deposit' : 'Withdraw'} <span className='fw-bold'>${Number(amount).toLocaleString()}</span> {type === 'deposit' ? 'to' : 'from'} {user.firstName}&nbsp;{user.lastName}'s account?</p>
-          <Button variant='outline-success' size='lg' className='m-2 mx-4'
+          <Button variant='primary' size='lg' className='m-2 mx-4'
           onClick={handleConfirm}>Yes, {type === 'deposit' ? 'deposit' : 'withdraw'}</Button>
-          <Button variant='outline-danger' size='lg' className='m-2 mx-4'
+          <Button variant='secondary' size='lg' className='m-2 mx-4'
           onClick={handleCloseConf}>No, cancel</Button>
       </Modal.Body>
     </Modal>
@@ -220,17 +223,11 @@ export function BankTransactionForm(props) {
         <Modal.Title>Success</Modal.Title>
       </Modal.Header>
       <Modal.Body className='text-center'>
-        <p>Your {type === 'deposit' ? 'deposit' : 'withdrawal'} is complete.</p>
+        <p className='lead'>Your {type === 'deposit' ? 'deposit' : 'withdrawal'} is complete.</p>
         <InputGroup size="lg" className='my-3 mb-4'>
-        <InputGroup.Text className=''>New account balance</InputGroup.Text>
-        <Button variant='outline-success' 
-          className='text-dark px-5' 
-          style={{/*
-            backgroundColor: 'rgba(31, 171, 199, 0.1)',
-            borderColor: 'rgba(31, 171, 199, 0.4)'
-          */}} 
-          disabled
-        >${user.balance.toLocaleString()}</Button>
+          <InputGroup.Text className='col-6'>New account balance</InputGroup.Text>
+          <Button variant='outline-dark' className='col-6 px-5' disabled
+          >${user.balance.toLocaleString()}</Button>
       </InputGroup>
       </Modal.Body>
       <Modal.Footer>

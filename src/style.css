@@ -1,3 +1,26 @@
+.btn-primary {
+  background-color: hsl(354, 61%, 23%)!important;
+  border-color: hsl(354, 61%, 13%)!important;
+  color: hsla(0, 0%, 100%, 0.9);
+}
+
+.btn-primary:hover {
+  background-color: hsla(354, 61%, 33%, 1)!important;
+}
+
+.btn:focus,
+input:focus {
+  box-shadow: 0 0 0 0.25rem hsla(354, 61%, 23%, 0.3)!important;
+}
+
+a:focus-visible {
+  outline: 2px solid hsla(49, 59%, 94%, 0.7)!important;
+}
+
+.form-control:focus {
+  border-color: hsla(354, 61%, 13%, 0.5)!important;
+}
+
 .navbar-toggler-icon {
   /* background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3e%3cpath stroke=%27rgba%280, 0, 0, 0.50%29%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3e%3c/svg%3e")!important; */
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='rgba(249, 246, 232, 0.70)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>")!important;
