@@ -49,6 +49,7 @@ export default function Login() {
     <>
       <CardBootstrap 
         maxWidth='25rem'
+        bgcolor="light"
         headerText='Login'
         body={(
           <>

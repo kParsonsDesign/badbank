@@ -9,6 +9,7 @@ export default function Deposit() {
         headerText="Deposit"
         className="mb-5" 
         maxWidth="25rem"
+        bgcolor="light"
         body={(
           <>
           <BankTransactionForm type='deposit' />
