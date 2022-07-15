@@ -32,7 +32,7 @@ export default function AllData() {
               <td key={`${index}balance`}>{user.balance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
             </tr>
             {user.transactionHistory ? (
-              <tr key={`${index}transactions-row`}><td colSpan="6" key={`${index}transactions-cell`}><table className='table w-75' style={{marginLeft: '20%'}} key={`${index}transactions-table`}>
+              <tr key={`${index}transactions-row`}><td></td><td colSpan="5" key={`${index}transactions-cell`}><table className='table' key={`${index}transactions-table`}>
                 <thead style={{color:'rgba(0, 0, 0, 0.65)', background:'rgba(0, 0, 0, 0.05)'}}><tr><td>Transactions:</td><td>Type</td><td>Amount</td><td>Running Balance</td></tr></thead>
                 <tbody style={{borderTopColor: 'rgba(0, 0, 0, 0.08)', color:'rgba(0, 0, 0, 0.65)', background:'rgba(0, 0, 0, 0.03)'}}>
                 {user.transactionHistory.map((transaction, tIndex) => {
