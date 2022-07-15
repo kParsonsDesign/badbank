@@ -96,8 +96,8 @@ export function BankTransactionForm(props) {
     if (amount > 1000000) setMessage('Amount too large for this service. Please contact local bank branch.');
   }, [amount]);
 
-
-  // if (type !== 'deposit' | type !== 'withdraw') return;
+  // don't display BankTransactionForm if not type deposit or withdraw
+  if (!(type === 'deposit' | type === 'withdraw')) return;
 
   const handleSubmit = (e) => {
     e.preventDefault();
