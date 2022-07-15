@@ -5,17 +5,18 @@ export default function AllData() {
   const ctx = React.useContext(UserContext);
 
   return (
-    <div>
+    <>
       <h1 className="my-3 mb-5">Registered Users</h1>
-      <table className="table">
+      <div className='table-responsive'>
+      <table className="table" style={{maxWidth: '60rem'}}>
         <thead>
           <tr>
-            <th scope="col">Logged In</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Password</th>
-            <th scope="col">Balance</th>
+            <th scope="col" key='head-logged'>Logged In</th>
+            <th scope="col" key='head-fn'>First Name</th>
+            <th scope="col" key='head-ln'>Last Name</th>
+            <th scope="col" key='head-email'>Email</th>
+            <th scope="col" key='head-pass'>Password</th>
+            <th scope="col" key='head-bal'>Balance</th>
           </tr>
         </thead>
       <tbody>
@@ -31,7 +32,7 @@ export default function AllData() {
               <td key={`${index}balance`}>${user.balance.toLocaleString("en-US")}</td>
             </tr>
             {user.transactionHistory ? (
-              <tr><td colSpan="6"><table className='table w-75' style={{marginLeft: '20%'}}>
+              <tr key={`${index}transactions-row`}><td colSpan="6" key={`${index}transactions-cell`}><table className='table w-75' style={{marginLeft: '20%'}} key={`${index}transactions-table`}>
                 <thead style={{color:'rgba(0, 0, 0, 0.65)', background:'rgba(0, 0, 0, 0.05)'}}><tr><td>Transactions:</td><td>Type</td><td>Amount</td><td>Running Balance</td></tr></thead>
                 <tbody style={{borderTopColor: 'rgba(0, 0, 0, 0.08)', color:'rgba(0, 0, 0, 0.65)', background:'rgba(0, 0, 0, 0.03)'}}>
                 {user.transactionHistory.map((transaction, tIndex) => {
@@ -52,6 +53,7 @@ export default function AllData() {
         })}
       </tbody>
       </table>
-    </div>
+      </div>
+    </>
   );  
 }  
