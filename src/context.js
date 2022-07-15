@@ -16,7 +16,7 @@ export default UserContext;
 
 
 export function CardBootstrap(props) {
-  console.log(props);
+  // console.log(props);
   function classes() {
     const bg        = props.bgcolor;
     const txt       = props.txtcolor;
@@ -74,7 +74,7 @@ export function BankTransactionForm(props) {
   const [success, setSuccess]     = useState(false);
   const handleCloseConf           = () => setShowConf(false);
   const handleCloseSuccess        = () => setSuccess(false);
-  // const handleShow = () => setShow(true);
+  const type = props.type;
 
    // keep track of form field states and set canSubmit for submit button
    useEffect(() => {
@@ -90,16 +90,21 @@ export function BankTransactionForm(props) {
     if (amount <= 0) setMessage('Please enter an amount greater than 0.');
     if (amount == '') setMessage('Please enter a valid dollar amount.');
     if (amount > 0) setMessage('Please enter a valid dollar amount.');
+    if (type === 'withdraw' && amount > user.balance) {
+      setMessage('Overdraft error. Insufficient funds for this transaction.');
+    }
     if (amount > 1000000) setMessage('Amount too large for this service. Please contact local bank branch.');
   }, [amount]);
 
-  const type = props.type;
+
   // if (type !== 'deposit' | type !== 'withdraw') return;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    // set form validation
     setValidated(true);
+    // check form validity
     if (!document.getElementById('depositInput').checkValidity()) return;
     // display confirmation window
     setShowConf(true);
@@ -182,7 +187,7 @@ export function BankTransactionForm(props) {
       {/* Deposit Area */}
       <InputGroup size="lg" className='my-3 mt-4 has-validation'>
         <InputGroup.Text className='col-4'>{type === 'deposit' ? 'Deposit' : 'Withdraw'}:</InputGroup.Text>
-        <FormControl type='number' id='depositInput' className='input-money' required
+        <FormControl type='number' id={type === 'deposit' ? 'depositInput' : 'withdrawInput'} className='input-money' required
           max={type === 'deposit' ? 1000000 : user.balance} min={0.01} step={0.01} 
           value={amount} onChange={handleChange}
         ></FormControl>
