@@ -6,9 +6,8 @@ export default function AllData() {
 
   return (
     <div>
-      <h1 className="my-3">All Data Page</h1>
-      <h3 className="mt-5 text-muted">Registered Users:</h3>
-      <table className="table">
+      <h1 className="my-3 mb-5">Registered Users</h1>
+      <table className="table table-striped">
         <thead>
           <tr>
             <th scope="col">Logged In</th>
@@ -22,14 +21,33 @@ export default function AllData() {
       <tbody>
         {ctx.users.map((user, index) => {
           return (
-            <tr key={index}>
-              <td>{user.loggedIn ? "X" : ""}</td>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.email}</td>
-              <td>{user.password}</td>
-              <td>${user.balance.toLocaleString("en-US")}</td>
+            <>
+            <tr key={`user${index}`}>
+              <td key={`${index}loggedIn`} style={{paddingLeft: '1.5rem'}}>{user.loggedIn ? <img style={{width: '1rem', height: '1rem'}} alt='check' src='https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/a51a7674-8d5d-4495-a2d2-a67c090f5c3b/32x32/2714.png'/> : ""}</td>
+              <td key={`${index}firstName`}>{user.firstName}</td>
+              <td key={`${index}lastName`}>{user.lastName}</td>
+              <td key={`${index}email`}>{user.email}</td>
+              <td key={`${index}password`}>{user.password}</td>
+              <td key={`${index}balance`}>${user.balance.toLocaleString("en-US")}</td>
             </tr>
+            {user.transactionHistory ? (
+              <tr><td colSpan="4"><table className='table table-striped' style={{marginLeft: '20%'}}>
+                <thead><tr><td style={{}}>Transactions:</td><td>Type</td><td>Amount</td><td>Running Balance</td></tr></thead>
+                <tbody style={{borderTopColor: 'lightgray', color: '#212529', opacity: '0.85'}}>
+                {user.transactionHistory.map((transaction, tIndex) => {
+                  return (
+                  <tr key={'user' + index + '-trans' + tIndex}>
+                    <td key={`user${index}-trans${tIndex}time`}>{transaction.time}</td>
+                    <td key={`user${index}-trans${tIndex}type`}>{transaction.type === 'deposit' ? 'Deposit' : 'Withdraw'}</td>
+                    <td key={`user${index}-trans${tIndex}amount`}>${transaction.amount}</td>
+                    <td key={`user${index}-trans${tIndex}runbal`}>${transaction.runningBalance.toLocaleString()}</td>
+                  </tr>
+                  );
+                })}
+                </tbody>
+              </table></td></tr>
+            ) : ''}
+            </>
           );
         })}
       </tbody>

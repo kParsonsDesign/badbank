@@ -94,7 +94,7 @@ export function BankTransactionForm(props) {
       setMessage('Overdraft error. Insufficient funds for this transaction.');
     }
     if (amount > 1000000) setMessage('Amount too large for this service. Please contact local bank branch.');
-  }, [amount]);
+  }, [amount, type, user]);
 
   // don't display BankTransactionForm if not type deposit or withdraw
   if (!(type === 'deposit' | type === 'withdraw')) return;
@@ -143,10 +143,11 @@ export function BankTransactionForm(props) {
   }
 
   const addTransactionHistory = (transaction) => {
+    const timestamp = new Date().toLocaleTimeString();
     if (ctx.users[userIndex].transactionHistory) {
-      ctx.users[userIndex].transactionHistory.unshift({type: type, amount: transaction});
+      ctx.users[userIndex].transactionHistory.unshift({type: type, amount: transaction, time: timestamp, runningBalance: ctx.users[userIndex].balance});
     } else {
-      ctx.users[userIndex].transactionHistory = [{type: type, amount: transaction}];
+      ctx.users[userIndex].transactionHistory = [{type: type, amount: transaction, time: timestamp, runningBalance: ctx.users[userIndex].balance}];
     }
   }
 
