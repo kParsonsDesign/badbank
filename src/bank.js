@@ -20,7 +20,7 @@ function BadBank() {
         <UserContext.Provider value={{
           users:[
             {firstName:'Tony', lastName:'Stark', email:'ironman@avengers.com', password:'freemoney', balance:100000, loggedIn:true},
-            {firstName:'Peter', lastName:'Parker', email:'peter@nyu.edu', password:'spiderman', balance:100, loggedIn:false},
+            {firstName:'Peter', lastName:'Parker', email:'peter@midtownhigh.edu', password:'spiderman', balance:100, loggedIn:false},
           ]
         }}>
 
