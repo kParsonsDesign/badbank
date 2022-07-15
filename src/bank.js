@@ -19,7 +19,7 @@ function BadBank() {
       <div className="container">
         <UserContext.Provider value={{
           users:[
-            {firstName:'Warren', lastName:'Buffet', email:'warren@money.com', password:'badbanker', balance:1000000, loggedIn:true},
+            {firstName:'Tony', lastName:'Stark', email:'ironman@avengers.com', password:'freemoney', balance:100000, loggedIn:true},
             {firstName:'Peter', lastName:'Parker', email:'peter@nyu.edu', password:'spiderman', balance:100, loggedIn:false},
           ]
         }}>
