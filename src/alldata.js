@@ -29,7 +29,7 @@ export default function AllData() {
               <td key={`${index}lastName`}>{user.lastName}</td>
               <td key={`${index}email`}>{user.email}</td>
               <td key={`${index}password`}>{user.password}</td>
-              <td key={`${index}balance`}>${user.balance.toLocaleString("en-US")}</td>
+              <td key={`${index}balance`}>{user.balance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
             </tr>
             {user.transactionHistory ? (
               <tr key={`${index}transactions-row`}><td colSpan="6" key={`${index}transactions-cell`}><table className='table w-75' style={{marginLeft: '20%'}} key={`${index}transactions-table`}>
@@ -40,8 +40,8 @@ export default function AllData() {
                   <tr key={'user' + index + '-trans' + tIndex}>
                     <td key={`user${index}-trans${tIndex}time`}>{transaction.time}</td>
                     <td key={`user${index}-trans${tIndex}type`}>{transaction.type === 'deposit' ? 'Deposit' : 'Withdraw'}</td>
-                    <td key={`user${index}-trans${tIndex}amount`}>${transaction.amount}</td>
-                    <td key={`user${index}-trans${tIndex}runbal`}>${transaction.runningBalance.toLocaleString()}</td>
+                    <td key={`user${index}-trans${tIndex}amount`}>{transaction.amount.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    <td key={`user${index}-trans${tIndex}runbal`}>{transaction.runningBalance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
                   </tr>
                   );
                 })}

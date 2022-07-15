@@ -125,7 +125,7 @@ export function BankTransactionForm(props) {
 
     if (type === 'deposit') {
       // add to user balance
-      ctx.users[userIndex].balance = Number((ctx.users[userIndex].balance + transaction).toFixed(2));
+      ctx.users[userIndex].balance = Number(Number(ctx.users[userIndex].balance + transaction).toFixed(2));
     }
     if (type === 'withdraw') {
       // check for overdraft
@@ -134,7 +134,7 @@ export function BankTransactionForm(props) {
         return;
       }
       // subtract from user balance
-      ctx.users[userIndex].balance = Number((ctx.users[userIndex].balance - transaction).toFixed(2));
+      ctx.users[userIndex].balance = Number(Number(ctx.users[userIndex].balance - transaction).toFixed(2));
     }
     addTransactionHistory(transaction);
     
@@ -188,7 +188,7 @@ export function BankTransactionForm(props) {
             borderColor: 'rgba(0, 0, 0, 0.3)'
           }} 
           disabled
-        >${user.balance.toLocaleString()}</Button>
+        >{user.balance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</Button>
       </InputGroup>
       <hr className="text-secondary" style={{opacity: '10%'}} />
 
@@ -213,7 +213,7 @@ export function BankTransactionForm(props) {
         <Modal.Title>Transaction Confirmation</Modal.Title>
       </Modal.Header>
       <Modal.Body className='text-center'>
-        <p className='lead'>{type === 'deposit' ? 'Deposit' : 'Withdraw'} <span className='fw-bold'>${Number(amount).toLocaleString()}</span> {type === 'deposit' ? 'to' : 'from'} {user.firstName}&nbsp;{user.lastName}'s account?</p>
+        <p className='lead'>{type === 'deposit' ? 'Deposit' : 'Withdraw'} <span className='fw-bold'>{Number(amount).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</span> {type === 'deposit' ? 'to' : 'from'} {user.firstName}&nbsp;{user.lastName}'s account?</p>
           <Button variant='primary' size='lg' className='m-2 mx-4'
           onClick={handleConfirm}>Yes, {type === 'deposit' ? 'deposit' : 'withdraw'}</Button>
           <Button variant='secondary' size='lg' className='m-2 mx-4'
@@ -231,7 +231,7 @@ export function BankTransactionForm(props) {
         <InputGroup size="lg" className='my-3 mb-4'>
           <InputGroup.Text className='col-6'>New account balance</InputGroup.Text>
           <Button variant='outline-dark' className='col-6 px-5' disabled
-          >${user.balance.toLocaleString()}</Button>
+          >{user.balance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</Button>
       </InputGroup>
       </Modal.Body>
       <Modal.Footer>
