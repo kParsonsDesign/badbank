@@ -72,7 +72,11 @@ export function BankTransactionForm(props) {
   const [message, setMessage]     = useState('Please enter a valid dollar amount.');
   const [showConf, setShowConf]   = useState(false);
   const [success, setSuccess]     = useState(false);
-  const handleCloseConf           = () => setShowConf(false);
+  const handleCloseConf = () => {
+    setAmount('');
+    setValidated(false);
+    setShowConf(false);
+  };
   const handleCloseSuccess        = () => setSuccess(false);
   const type = props.type;
 
@@ -105,7 +109,6 @@ export function BankTransactionForm(props) {
     // set form validation
     setValidated(true);
     // check form validity
-    
     if (!document.getElementById(type + 'Input').checkValidity()) return;
     // display confirmation window
     setShowConf(true);
@@ -190,7 +193,8 @@ export function BankTransactionForm(props) {
       <hr className="text-secondary" style={{opacity: '10%'}} />
 
       {/* Transaction Area */}
-      <InputGroup size="lg" className='my-3 mt-4 has-validation'>
+      <InputGroup size="lg" className='my-3 has-validation'>
+        <div className='text-muted mx-auto'>Only enter numbers and decimal: 5000.00</div>
         <InputGroup.Text className='col-4'>{type === 'deposit' ? 'Deposit' : 'Withdraw'}:</InputGroup.Text>
         <FormControl type='number' id={type === 'deposit' ? 'depositInput' : 'withdrawInput'} className='input-money' required
           max={type === 'deposit' ? 1000000 : user.balance} min={0.01} step={0.01} 
