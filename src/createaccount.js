@@ -101,7 +101,7 @@ export default function CreateAccount() {
 
   return (
     <div>
-      {/* <h1 className="my-3">Create Account Page</h1> */}
+
       <CardBootstrap 
         maxWidth="30rem"
         bgcolor="light"

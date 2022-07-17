@@ -3,13 +3,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, Card, Form, FormControl, InputGroup, Dropdown, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-// Global variables in this file
-// do not need to be brought in with context to index.js
-// const Route       = ReactRouterDOM.Route;
-// const Routes      = ReactRouterDOM.Routes;
-// const Link        = ReactRouterDOM.Link;
-// const HashRouter  = ReactRouterDOM.HashRouter;
-
 // Context shared between consumer components
 const UserContext = React.createContext(null);
 export default UserContext;
@@ -80,8 +73,8 @@ export function BankTransactionForm(props) {
   const handleCloseSuccess        = () => setSuccess(false);
   const type = props.type;
 
-   // keep track of form field states and set canSubmit for submit button
-   useEffect(() => {
+  // keep track of form field states and set canSubmit for submit button
+  useEffect(() => {
     // if(amount > 0) setSubmit(true);
     // if(amount === 0 | amount === NaN) setSubmit(false);
     // if(!document.getElementById(type + 'Input').checkValidity()) setSubmit(false);
