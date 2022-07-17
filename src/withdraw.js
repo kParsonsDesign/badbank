@@ -5,7 +5,7 @@ export default function Withdraw() {
   return (
     <>
       <CardBootstrap 
-        headerText="Witdhraw"
+        headerText="Withdraw"
         className="mb-5"
         maxWidth="25rem"
         bgcolor="light"
