@@ -77,6 +77,7 @@ The **goals for the final project** were to use the React single page applicatio
 This project can be viewed on a web browser at:
 - GitHub Pages deployment: [kparsonsdesign.github.io/badbank/](https://kparsonsdesign.github.io/badbank/)
 - Amazon Web Services deployment: [http://katherine-parsons-bankingapp.s3-website-us-east-1.amazonaws.com/](http://katherine-parsons-bankingapp.s3-website-us-east-1.amazonaws.com/)
+- Amazon Amplify App continuous deployment from GitHub repo: [https://master.d2gn8uf333xpvj.amplifyapp.com/](https://master.d2gn8uf333xpvj.amplifyapp.com/)
 
 ## Roadmap
 1. Include buttons on some of the pages/routes navigate to other pages, in addition to the navbar navigation.
