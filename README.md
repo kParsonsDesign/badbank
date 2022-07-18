@@ -76,7 +76,7 @@ The **goals for the final project** were to use the React single page applicatio
 ## To Run
 This project can be viewed on a web browser at:
 - GitHub Pages deployment: [kparsonsdesign.github.io/badbank/](https://kparsonsdesign.github.io/badbank/)
-- Amazon Web Services deployment: [http://katherine-parsons-bankingapp.s3-website-us-east-1.amazonaws.com/](http://katherine-parsons-bankingapp.s3-website-us-east-1.amazonaws.com/)
+- Amazon Web Services deployment: [https://katherine-parsons-bankingapp.s3.us-east-1.amazonaws.com/index.html](https://katherine-parsons-bankingapp.s3.us-east-1.amazonaws.com/index.html)
 - Amazon Amplify App continuous deployment from GitHub repo: [https://master.d2gn8uf333xpvj.amplifyapp.com/](https://master.d2gn8uf333xpvj.amplifyapp.com/)
 
 ## Roadmap
